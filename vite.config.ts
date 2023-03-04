@@ -1,10 +1,12 @@
 import path from 'node:path';
 
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, splitVendorChunkPlugin} from 'vite';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
 import topLevelAwait from 'vite-plugin-top-level-await';
 import wasm from 'vite-plugin-wasm';
+import viteCompression from 'vite-plugin-compression';
+import purgecss from '@fullhuman/postcss-purgecss';
 
 import { getFileList } from './tools/get_file_list';
 
@@ -21,7 +23,6 @@ const getPublicFileList = async (targetPath: string) => {
 };
 
 export default defineConfig(async () => {
-  const videos = await getPublicFileList(path.resolve(publicDir, 'videos'));
 
   return {
     build: {
@@ -35,9 +36,10 @@ export default defineConfig(async () => {
         },
         plugins: [
           visualizer(),
+
         ],
       },
-      target: 'es2015',
+      target: 'es2022',
     },
     plugins: [
       react(),
@@ -46,8 +48,20 @@ export default defineConfig(async () => {
       ViteEjsPlugin({
         module: '/src/client/index.tsx',
         title: '買えるオーガニック',
-        videos,
+        // videos,
       }),
+      splitVendorChunkPlugin(),
+      viteCompression(),
     ],
+    css: {
+      postcss: {
+        plugins: [
+          purgecss({
+            content: ["dist/*.html", "dist/assets/*.js"],
+            css: ["dist/assets/*.css"],
+          }),
+        ],
+      },
+    },
   };
 });
