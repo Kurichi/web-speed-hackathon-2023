@@ -1,5 +1,4 @@
-// import _ from 'lodash';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import type { FC } from 'react';
 import { memo } from 'react';
 

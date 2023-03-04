@@ -19,9 +19,6 @@ export const NotFound: FC = () => {
     load();
   }, []);
 
-  if (!isReady) {
-    return null;
-  }
 
   return (
     <>
@@ -31,8 +28,16 @@ export const NotFound: FC = () => {
       <Layout>
         <div className={styles.container()}>
           <div className={styles.inner()}>
-            <p className={styles.mainParagraph()}>ページが存在しません</p>
-            <p className={styles.subParagraph()}>Not Found</p>
+            {
+              isReady ? (
+                <div>
+                  <p className={styles.mainParagraph()}>ページが存在しません</p>
+                  <p className={styles.subParagraph()}>Not Found</p>
+                </div>
+              ) : (
+                <p>読み込み中</p>
+              )
+            }
           </div>
         </div>
       </Layout>

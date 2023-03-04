@@ -1,8 +1,7 @@
 import CanvasKitInit from 'canvaskit-wasm';
 import CanvasKitWasmUrl from 'canvaskit-wasm/bin/canvaskit.wasm?url';
 import classNames from 'classnames';
-// import _ from 'lodash';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import { memo, useEffect, useState } from 'react';
 import type { FC } from 'react';
 
@@ -64,9 +63,15 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
           <WidthRestriction>
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
-                <AspectRatio ratioHeight={9} ratioWidth={16}>
-                  <img className={styles.image()} src={thumbnailFile?.filename} />
-                </AspectRatio>
+                {thumbnailFile ? (
+                  <AspectRatio ratioHeight={9} ratioWidth={16}>
+                    <img className={styles.image()} src={thumbnailFile?.filename} />
+                  </AspectRatio>
+                ) : (
+                  <AspectRatio ratioHeight={9} ratioWidth={16}>
+                    <div />
+                  </AspectRatio>
+                )}
 
                 <div className={styles.overlay()}>
                   <p

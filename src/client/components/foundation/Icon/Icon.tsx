@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Icon: FC<Props> = ({ color, height, type, width }) => {
-  const Icons = [FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay];
+  const Icons = [FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay, FaShoppingCart];
   const Icon = Icons.find((icon) => icon.name === type);
   return (
     <span className={classNames(type, styles.container({ color, height, width }))}>

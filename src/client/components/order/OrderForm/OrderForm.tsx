@@ -1,8 +1,6 @@
 import { useFormik } from 'formik';
-// import _ from 'lodash';
-import { cloneDeep } from 'lodash';
+import { cloneDeep } from 'lodash-es';
 import type { ChangeEventHandler, FC } from 'react';
-import zipcodeJa from 'zipcode-ja';
 
 import { PrimaryButton } from '../../foundation/PrimaryButton';
 import { TextInput } from '../../foundation/TextInput';
@@ -35,12 +33,20 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
     formik.handleChange(event);
 
     const zipCode = event.target.value;
-    const address = [...(cloneDeep(zipcodeJa)[zipCode]?.address ?? [])];
-    const prefecture = address.shift();
-    const city = address.join(' ');
+    if (zipCode.length !== 7) {
+      return;
+    }
+    fetch(`https://zipcoda.net/api?zipcode=${zipCode}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const address = data.items[0].components;
 
-    formik.setFieldValue('prefecture', prefecture);
-    formik.setFieldValue('city', city);
+        const prefecture = address.shift();
+        const city = address.join(' ');
+
+        formik.setFieldValue('prefecture', prefecture);
+        formik.setFieldValue('city', city);
+      });
   };
 
   return (

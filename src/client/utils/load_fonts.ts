@@ -12,7 +12,7 @@ const FONT_FACE_SOURCES: FontFaceSource[] = [
       weight: '700',
     },
     family: 'Noto Serif JP',
-    source: "url('/fonts/NotoSerifJP-Bold2.woff')",
+    source: "url('/fonts/NotoSerifJP-Bold.otf')",
   },
   {
     descripter: {
@@ -21,20 +21,22 @@ const FONT_FACE_SOURCES: FontFaceSource[] = [
       weight: '400',
     },
     family: 'Noto Serif JP',
-    source: "url('/fonts/NotoSerifJP-Regular2.woff')",
+    source: "url('/fonts/NotoSerifJP-Regular.otf')",
   },
 ];
 
 export async function loadFonts() {
   const fontFaces = FONT_FACE_SOURCES.map(({ descripter, family, source }) => new FontFace(family, source, descripter));
-  const fonts: FontFace[] = [];
+  // const fonts: FontFace[] = [];
 
   for (const fontFace of fontFaces) {
-    const font = await fontFace.load();
-    fonts.push(font);
+    // const font =
+    await fontFace.load();
+    // fonts.push(font);
+    document.fonts.add(fontFace);
   }
 
-  for (const font of fontFaces) {
-    document.fonts.add(font);
-  }
+  // for (const font of fontFaces) {
+  //   document.fonts.add(font);
+  // }
 }

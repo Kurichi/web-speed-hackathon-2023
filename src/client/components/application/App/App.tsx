@@ -3,12 +3,11 @@ import type { FC } from 'react';
 import { SignInModal } from '../../modal/SignInModal';
 import { SignUpModal } from '../../modal/SignUpModal';
 import { Providers } from '../Providers';
-import { Routes } from '../Routes';
+import { Router } from '../Routes';
 
 export const App: FC = () => (
   <Providers>
-
-    <Routes />
+    <Router />
     <SignInModal />
     <SignUpModal />
   </Providers>

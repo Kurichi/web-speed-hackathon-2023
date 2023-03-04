@@ -1,7 +1,6 @@
 import type { FormikErrors } from 'formik';
 import { useFormik } from 'formik';
-// import _ from 'lodash';
-import { isEqual } from 'lodash';
+import { isEqual } from 'lodash-es';
 import type { FC } from 'react';
 import { memo } from 'react';
 import * as z from 'zod';

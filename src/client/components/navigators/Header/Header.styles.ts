@@ -10,6 +10,8 @@ export const container = () => css`
 
 export const logo = () => css`
   display: flex;
+  width: 205px;
+  high: 32px;
 `;
 
 export const orderLink = () => css`
