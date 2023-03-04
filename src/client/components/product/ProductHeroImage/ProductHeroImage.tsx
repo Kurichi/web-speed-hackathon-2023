@@ -45,12 +45,12 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
 
   const [imageDataUrl, setImageDataUrl] = useState<string>();
 
-  useEffect(() => {
-    if (thumbnailFile == null) {
-      return;
-    }
-    loadImageAsDataURL(thumbnailFile.filename).then((dataUrl) => setImageDataUrl(dataUrl));
-  }, [thumbnailFile]);
+  // useEffect(() => {
+  //   if (thumbnailFile == null) {
+  //     return;
+  //   }
+  //   loadImageAsDataURL(thumbnailFile.filename).then((dataUrl) => setImageDataUrl(dataUrl));
+  // }, [thumbnailFile]);
 
   if (imageDataUrl === undefined) {
     return null;
@@ -64,7 +64,7 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
                 <AspectRatio ratioHeight={9} ratioWidth={16}>
-                  <img className={styles.image()} src={imageDataUrl} />
+                  <img className={styles.image()} src={thumbnailFile?.filename} />
                 </AspectRatio>
 
                 <div className={styles.overlay()}>
