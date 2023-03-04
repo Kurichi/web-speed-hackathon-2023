@@ -7,6 +7,7 @@ import { Routes } from '../Routes';
 
 export const App: FC = () => (
   <Providers>
+
     <Routes />
     <SignInModal />
     <SignUpModal />
