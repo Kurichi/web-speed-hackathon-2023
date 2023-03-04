@@ -1,21 +1,24 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
-import * as Icons from 'react-icons/fa';
+import { FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay, FaShoppingCart } from 'react-icons/fa';
 
 import * as styles from './Icon.styles';
 
 type Props = {
-  type: keyof typeof Icons;
+  type: 'FaCheckCircle' | 'FaArrowLeft' | 'FaArrowRight' | 'FaUser' | 'FaPlay' | 'FaShoppingCart';
   width: number;
   height: number;
   color: string;
 };
 
 export const Icon: FC<Props> = ({ color, height, type, width }) => {
-  const Icon = Icons[type];
+  const Icons = [FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay];
+  const Icon = Icons.find((icon) => icon.name === type);
   return (
     <span className={classNames(type, styles.container({ color, height, width }))}>
-      <Icon />
+      {
+        Icon && <Icon />
+      }
     </span>
   );
 };
