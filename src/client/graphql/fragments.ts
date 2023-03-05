@@ -208,10 +208,12 @@ export type AuthUserFragmentResponse = UserFragmentResponse & {
   orders: OrderFragmentResponse[];
 };
 
+
 export const FeatureProductFragment = gql`
   ${ProductMediaFragment}
   ${LimitedTimeOfferFragment}
-  fragment FeatureProductFragment on Product {
+
+  fragment ProductFragment on Product {
     id
     name
     price
@@ -223,6 +225,7 @@ export const FeatureProductFragment = gql`
     }
   }
 `;
+
 export type FeatureProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price'> & {
   media: ProductMediaFragmentResponse[];
   offers: LimitedTimeOfferFragmentResponse[];
@@ -230,6 +233,7 @@ export type FeatureProductFragmentResponse = Pick<Product, 'id' | 'name' | 'pric
 
 export const FeatureItemFragment = gql`
   ${FeatureProductFragment}
+
   fragment FeatureItemFragment on FeatureItem {
     id
     product {
@@ -237,38 +241,6 @@ export const FeatureItemFragment = gql`
     }
   }
 `;
-// export const FeatureProductFragment = gql`
-//   ${ProductMediaFragment}
-//   ${LimitedTimeOfferFragment}
-
-//   fragment ProductFragment on Product {
-//     id
-//     name
-//     price
-//     media {
-//       ...ProductMediaFragment
-//     }
-//     offers {
-//       ...LimitedTimeOfferFragment
-//     }
-//   }
-// `;
-
-// export type FeatureProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price'> & {
-//   media: ProductMediaFragmentResponse[];
-//   offers: LimitedTimeOfferFragmentResponse[];
-// };
-
-// export const FeatureItemFragment = gql`
-//   ${FeatureProductFragment}
-
-//   fragment FeatureItemFragment on FeatureItem {
-//     id
-//     product {
-//       ...FeatureProductFragment
-//     }
-//   }
-// `;
 export type FeatureItemFragmentResponse = Pick<FeatureItem, 'id'> & {
   product: ProductFragmentResponse;
 };
