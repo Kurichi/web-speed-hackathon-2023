@@ -13,27 +13,6 @@ import { WidthRestriction } from '../../foundation/WidthRestriction';
 
 import * as styles from './ProductHeroImage.styles';
 
-async function loadImageAsDataURL(url: string): Promise<string> {
-  const CanvasKit = await CanvasKitInit({
-    // WASM ファイルの URL を渡す
-    locateFile: () => CanvasKitWasmUrl,
-  });
-
-  // 画像を読み込む
-  const data = await fetch(url).then((res) => res.arrayBuffer());
-  const image = CanvasKit.MakeImageFromEncoded(data);
-  if (image == null) {
-    // 読み込みに失敗したとき、透明な 1x1 GIF の Data URL を返却する
-    return 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-  }
-
-  // 画像を Canvas に描画して Data URL を生成する
-  const canvas = CanvasKit.MakeCanvas(image.width(), image.height());
-  const ctx = canvas.getContext('2d');
-  // @ts-expect-error ...
-  ctx?.drawImage(image, 0, 0);
-  return canvas.toDataURL();
-}
 
 type Props = {
   product: ProductFragmentResponse;
@@ -46,15 +25,8 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
   const [imageDataUrl, setImageDataUrl] = useState<string>();
 
   useEffect(() => {
-    if (thumbnailFile == null) {
-      return;
-    }
-    loadImageAsDataURL(thumbnailFile.filename).then((dataUrl) => setImageDataUrl(dataUrl));
+    setImageDataUrl(thumbnailFile?.filename);
   }, [thumbnailFile]);
-
-  if (imageDataUrl === undefined) {
-    return null;
-  }
 
   return (
     <GetDeviceType>
@@ -63,15 +35,13 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
           <WidthRestriction>
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
-                {thumbnailFile ? (
-                  <AspectRatio ratioHeight={9} ratioWidth={16}>
+                <AspectRatio ratioHeight={9} ratioWidth={16}>
+                  {imageDataUrl ? (
                     <img className={styles.image()} src={thumbnailFile?.filename} />
-                  </AspectRatio>
-                ) : (
-                  <AspectRatio ratioHeight={9} ratioWidth={16}>
+                  ) : (
                     <div />
-                  </AspectRatio>
-                )}
+                  )}
+                </AspectRatio>
 
                 <div className={styles.overlay()}>
                   <p
