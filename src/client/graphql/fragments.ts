@@ -212,8 +212,7 @@ export type AuthUserFragmentResponse = UserFragmentResponse & {
 export const FeatureProductFragment = gql`
   ${ProductMediaFragment}
   ${LimitedTimeOfferFragment}
-
-  fragment ProductFragment on Product {
+  fragment FeatureProductFragment on Product {
     id
     name
     price
@@ -225,6 +224,7 @@ export const FeatureProductFragment = gql`
     }
   }
 `;
+
 
 export type FeatureProductFragmentResponse = Pick<Product, 'id' | 'name' | 'price'> & {
   media: ProductMediaFragmentResponse[];

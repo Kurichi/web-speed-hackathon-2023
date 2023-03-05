@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Layout } from '../../components/application/Layout';
@@ -18,18 +17,16 @@ import * as styles from './OrderComplete.styles';
 
 export const OrderComplete: FC = () => {
   const navigate = useNavigate();
-  const [isReadyFont, setIsReadyFont] = useState(false);
   const { authUserLoading, isAuthUser } = useAuthUser();
   const { recommendation } = useRecommendation();
 
   useEffect(() => {
-    loadFonts().then(() => {
-      setIsReadyFont(true);
-    });
+    document.title = '購入が完了しました';
+    loadFonts();
   }, []);
 
-  if (!recommendation || !isReadyFont || authUserLoading) {
-    return null;
+  if (authUserLoading) {
+    return <div>Loading</div>;
   }
   if (!isAuthUser) {
     navigate('/');
@@ -38,9 +35,6 @@ export const OrderComplete: FC = () => {
 
   return (
     <>
-      <Helmet>
-        <title>購入が完了しました</title>
-      </Helmet>
       <Layout>
         <GetDeviceType>
           {({ deviceType }) => (
@@ -64,7 +58,7 @@ export const OrderComplete: FC = () => {
 
                 <div className={styles.recommended()}>
                   <h2 className={styles.recommendedHeading()}>こちらの商品もオススメです</h2>
-                  <ProductHeroImage product={recommendation.product} title={recommendation.product.name} />
+                  {recommendation && <ProductHeroImage product={recommendation.product} title={recommendation.product.name} />}
                 </div>
 
                 <div className={styles.backToTopButtonWrapper()}>

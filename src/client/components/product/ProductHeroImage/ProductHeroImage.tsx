@@ -25,7 +25,7 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
   const [imageDataUrl, setImageDataUrl] = useState<string>();
 
   useEffect(() => {
-    setImageDataUrl(thumbnailFile?.filename);
+    // setImageDataUrl(thumbnailFile?.filename);
   }, [thumbnailFile]);
 
   return (
@@ -36,11 +36,11 @@ export const ProductHeroImage: FC<Props> = memo(({ product, title }) => {
             <Anchor href={`/product/${product.id}`}>
               <div className={styles.container()}>
                 <AspectRatio ratioHeight={9} ratioWidth={16}>
-                  {imageDataUrl ? (
-                    <img className={styles.image()} src={thumbnailFile?.filename} />
-                  ) : (
-                    <div />
-                  )}
+                  <img className={styles.image()} src={
+                    thumbnailFile?.filename ??
+                    'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+                  }
+                  />
                 </AspectRatio>
 
                 <div className={styles.overlay()}>

@@ -16,12 +16,14 @@ const suspenseCache = new SuspenseCache();
 
 export const Providers: FC<Props> = ({ children }) => (
   <ApolloProvider client={apolloClient} suspenseCache={suspenseCache}>
-    <BrowserRouter>
-      <RecoilRoot>
+    <RecoilRoot>
+      <Suspense>
         <ErrorBoundary fallbackRender={Fallback}>
-          <Suspense fallback={null}>{children}</Suspense>
+          <BrowserRouter>
+            <Suspense fallback={null}>{children}</Suspense>
+          </BrowserRouter>
         </ErrorBoundary>
-      </RecoilRoot>
-    </BrowserRouter>
+      </Suspense>
+    </RecoilRoot>
   </ApolloProvider>
 );

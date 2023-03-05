@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { Helmet } from 'react-helmet';
+import { FC, useEffect } from 'react';
 
 import { Layout } from '../../components/application/Layout';
 import { ProductList } from '../../components/feature/ProductList';
@@ -13,18 +12,15 @@ export const Top: FC = () => {
   const { recommendation } = useRecommendation();
   const { features } = useFeatures();
 
-  if (recommendation === undefined || features === undefined) {
-    return null;
-  }
+  useEffect(() => {
+    document.title = '買えるオーガニック';
+  }, []);
 
   return (
     <>
-      <Helmet>
-        <title>買えるオーガニック</title>
-      </Helmet>
       <Layout>
         <div>
-          <ProductHeroImage product={recommendation.product} title="今週のオススメ" />
+          {recommendation && <ProductHeroImage product={recommendation?.product} title="今週のオススメ" />}
 
           <div className={styles.featureList()}>
             {features.map((featureSection) => {

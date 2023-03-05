@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import { Helmet } from 'react-helmet';
+import { FC, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Layout } from '../../components/application/Layout';
@@ -32,6 +31,10 @@ export const ProductDetail: FC = () => {
   const { amountInCart } = useAmountInCart(Number(productId));
   const { activeOffer } = useActiveOffer(product);
 
+  useEffect(() => {
+    document.title = product?.name ?? '';
+  }, [product])
+
   const handleSubmitReview = ({ comment }: { comment: string }) => {
     sendReview({
       variables: {
@@ -49,11 +52,6 @@ export const ProductDetail: FC = () => {
 
   return (
     <>
-      {product && (
-        <Helmet>
-          <title>{product.name}</title>
-        </Helmet>
-      )}
       <Layout>
         <WidthRestriction>
           <div className={styles.container()}>

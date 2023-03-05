@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import type { FC } from 'react';
 
-import { Icon } from '../../foundation/Icon';
-
+import { IconHolder } from '../../foundation/Icon';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import * as styles from './ProductListSlideButton.styles';
 
 export const ArrowType = {
@@ -27,9 +27,13 @@ export const ProductListSlideButton: FC<Props> = ({ arrowType, disabled, onClick
       onClick={onClick}
     >
       {arrowType === ArrowType.LEFT ? (
-        <Icon color="#222222" height={16} type="FaArrowLeft" width={16} />
+        <IconHolder color="#222222" height={16} width={16} >
+          <FaArrowLeft />
+        </IconHolder>
       ) : (
-        <Icon color="#222222" height={16} type="FaArrowRight" width={16} />
+        <IconHolder color="#222222" height={16} width={16}>
+          <FaArrowRight />
+        </IconHolder>
       )}
     </button>
   );

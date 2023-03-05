@@ -1,24 +1,14 @@
-import classNames from 'classnames';
-import type { FC } from 'react';
-import { FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay, FaShoppingCart } from 'react-icons/fa';
+import type { FC, ReactNode } from 'react';
 
 import * as styles from './Icon.styles';
 
 type Props = {
-  type: 'FaCheckCircle' | 'FaArrowLeft' | 'FaArrowRight' | 'FaUser' | 'FaPlay' | 'FaShoppingCart';
   width: number;
   height: number;
+  children: ReactNode;
   color: string;
 };
 
-export const Icon: FC<Props> = ({ color, height, type, width }) => {
-  const Icons = [FaCheckCircle, FaArrowLeft, FaArrowRight, FaUser, FaPlay, FaShoppingCart];
-  const Icon = Icons.find((icon) => icon.name === type);
-  return (
-    <span className={classNames(type, styles.container({ color, height, width }))}>
-      {
-        Icon && <Icon />
-      }
-    </span>
-  );
+export const IconHolder: FC<Props> = ({ color, height, children, width }) => {
+  return <span className={styles.container({ color, height, width })}>{children}    </span>
 };

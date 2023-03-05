@@ -11,30 +11,14 @@ type Props = {
 };
 
 export const AspectRatio: FC<Props> = ({ children, ratioHeight, ratioWidth }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [clientHeight, setClientHeight] = useState<number>(0);
+  const [aspectRatio, setAspectRatio] = useState(0);
 
   useEffect(() => {
-    const updateClientHeight = throttle(1000, () => {
-      const width = containerRef.current?.getBoundingClientRect().width ?? 0;
-      const height = (width * ratioHeight) / ratioWidth;
-      setClientHeight(height);
-    });
-
-    let timer = (function tick() {
-      return setImmediate(() => {
-        updateClientHeight();
-        timer = tick();
-      });
-    })();
-
-    return () => {
-      clearImmediate(timer);
-    };
-  }, [ratioHeight, ratioWidth]);
+    setAspectRatio(ratioWidth / ratioHeight);
+  }, []);
 
   return (
-    <div ref={containerRef} className={styles.container({ clientHeight })}>
+    <div className={styles.container({ aspectRatio })}>
       {children}
     </div>
   );

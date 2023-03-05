@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import { cloneDeep } from 'lodash-es';
 import type { ChangeEventHandler, FC } from 'react';
 
 import { PrimaryButton } from '../../foundation/PrimaryButton';
@@ -56,6 +55,7 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
           <TextInput
             required
             id="zipCode"
+            autoComplete='postal-code'
             label="郵便番号"
             onChange={handleZipcodeChange}
             placeholder="例: 1500042"
@@ -64,6 +64,7 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
           <TextInput
             required
             id="prefecture"
+            autoComplete='address-level1'
             label="都道府県"
             onChange={formik.handleChange}
             placeholder="例: 東京都"
@@ -71,7 +72,9 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
           />
           <TextInput
             required
+            type="city"
             id="city"
+            autoComplete='address-level2'
             label="市区町村"
             onChange={formik.handleChange}
             placeholder="例: 渋谷区宇田川町"
@@ -80,6 +83,7 @@ export const OrderForm: FC<Props> = ({ onSubmit }) => {
           <TextInput
             required
             id="streetAddress"
+            autoComplete='street-address'
             label="番地・建物名など"
             onChange={formik.handleChange}
             placeholder="例: 40番1号 Abema Towers"
